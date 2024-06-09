@@ -1,22 +1,14 @@
-package com.project.demo.logic.entity.exerciseresult;
+package com.project.demo.logic.entity.gameresult;
 
-import com.project.demo.logic.entity.exercise.Exercise;
-import com.project.demo.logic.entity.rol.Role;
+import com.project.demo.logic.entity.game.Game;
 import com.project.demo.logic.entity.user.User;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
-@Table(name = "Exercise_results")
+@Table(name = "Game_results")
 @Entity
-public class ExerciseResult {
+public class GameResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resultId;
@@ -36,19 +28,19 @@ public class ExerciseResult {
     private User userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exercise_id", referencedColumnName = "exerciseId", nullable = false)
-    private Exercise exerciseId;
+    @JoinColumn(name = "game_id", referencedColumnName = "gameId", nullable = false)
+    private Game gameId;
 
-    public ExerciseResult() {}
+    public GameResult() {}
 
-    public ExerciseResult(Long resultId, Date gameDate, Integer score, Integer time, String levelDifficulty, User userId, Exercise exerciseId) {
+    public GameResult(Long resultId, Date gameDate, Integer score, Integer time, String levelDifficulty, User userId, Game gameId) {
         this.resultId = resultId;
         this.gameDate = gameDate;
         this.score = score;
         this.time = time;
         this.levelDifficulty = levelDifficulty;
         this.userId = userId;
-        this.exerciseId = exerciseId;
+        this.gameId = gameId;
     }
 
     public Long getResultId() {
@@ -99,11 +91,11 @@ public class ExerciseResult {
         this.userId = userId;
     }
 
-    public Exercise getExerciseId() {
-        return exerciseId;
+    public Game getExerciseId() {
+        return gameId;
     }
 
-    public void setExerciseId(Exercise exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setExerciseId(Game gameId) {
+        this.gameId = gameId;
     }
 }

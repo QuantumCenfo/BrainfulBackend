@@ -1,18 +1,9 @@
 package com.project.demo.logic.entity.form;
 
-import com.project.demo.logic.entity.exercise.Exercise;
-import com.project.demo.logic.entity.rol.Role;
 import com.project.demo.logic.entity.user.User;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 
 @Table(name = "Forms")
@@ -52,7 +43,7 @@ public class Form {
     private String dietType;
 
     @Column(name = "screen_time")
-    private String screenTime;
+    private Integer screenTime;
 
     @Column(name = "stress_management")
     private String stressManagement;
@@ -63,7 +54,7 @@ public class Form {
 
     public Form() {}
 
-    public Form(Long formId, Date date, Integer age, Integer sleepHours, String exerciseDays, Boolean useDrugs, Boolean useAlcohol, String gender, String job, String eduacationLevel, String familyHistory, String medicalCondition, String mentalIllness, String dietType, String screenTime, String stressManagement, User user) {
+    public Form(Long formId, Date date, Integer age, Integer sleepHours, String exerciseDays, Boolean useDrugs, Boolean useAlcohol, String gender, String job, String eduacationLevel, String familyHistory, String medicalCondition, String mentalIllness, String dietType, int screenTime, String stressManagement, User user) {
         this.formId = formId;
         this.date = date;
         this.age = age;
@@ -195,11 +186,11 @@ public class Form {
         this.dietType = dietType;
     }
 
-    public String getScreenTime() {
+    public Integer getScreenTime() {
         return screenTime;
     }
 
-    public void setScreenTime(String screenTime) {
+    public void setScreenTime(Integer screenTime) {
         this.screenTime = screenTime;
     }
 

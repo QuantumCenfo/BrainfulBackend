@@ -17,7 +17,7 @@ public class Recommendation {
     @Column(name = "recommendation_type")
     private String recommendationType;
 
-    @Column(length = 500)
+    @Column(length = 1000)
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)

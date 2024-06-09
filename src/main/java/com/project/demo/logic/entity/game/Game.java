@@ -1,23 +1,13 @@
-package com.project.demo.logic.entity.exercise;
+package com.project.demo.logic.entity.game;
 
-import com.project.demo.logic.entity.rol.Role;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-@Table(name = "Exercises")
+@Table(name = "Games")
 @Entity
-public class Exercise {
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long exerciseId;
+    private Long gameId;
 
     private String name;
 
@@ -30,22 +20,22 @@ public class Exercise {
     @Column(name = "level_difficulty", length = 50)
     private String levelDifficulty;
 
-    public Exercise() {}
+    public Game() {}
 
-    public Exercise(Long exerciseId, String name, String description, String tipoEjercicio, String levelDifficulty) {
-        this.exerciseId = exerciseId;
+    public Game(Long exerciseId, String name, String description, String tipoEjercicio, String levelDifficulty) {
+        this.gameId = exerciseId;
         this.name = name;
         this.description = description;
         this.tipoEjercicio = tipoEjercicio;
         this.levelDifficulty = levelDifficulty;
     }
 
-    public Long getExerciseId() {
-        return exerciseId;
+    public Long getgameId() {
+        return gameId;
     }
 
-    public void setExerciseId(Long exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setgameId(Long gameId) {
+        this.gameId = gameId;
     }
 
     public String getName() {

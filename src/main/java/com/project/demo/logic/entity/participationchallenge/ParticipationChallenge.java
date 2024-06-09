@@ -11,7 +11,7 @@ import java.util.Date;
 public class ParticipationChallenge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long participationId;
+    private Long participationGameId;
 
     private String status;
 
@@ -34,8 +34,8 @@ public class ParticipationChallenge {
 
     public ParticipationChallenge() {}
 
-    public ParticipationChallenge(Long participationId, String status, Date endDate, Integer objectiveScoreChallenge, Integer objectiveTimeChallenge, ChallengeGame challengeId, User userId) {
-        this.participationId = participationId;
+    public ParticipationChallenge(Long participationGameId, String status, Date endDate, Integer objectiveScoreChallenge, Integer objectiveTimeChallenge, ChallengeGame challengeId, User userId) {
+        this.participationGameId = participationGameId;
         this.status = status;
         this.endDate = endDate;
         this.objectiveScoreChallenge = objectiveScoreChallenge;
@@ -45,11 +45,11 @@ public class ParticipationChallenge {
     }
 
     public Long getParticipationId() {
-        return participationId;
+        return participationGameId;
     }
 
-    public void setParticipationId(Long participationId) {
-        this.participationId = participationId;
+    public void setParticipationId(Long participationGameId) {
+        this.participationGameId = participationGameId;
     }
 
     public String getStatus() {

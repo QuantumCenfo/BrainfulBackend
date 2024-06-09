@@ -22,13 +22,13 @@ public class Media {
 
     private String title;
 
-    @Column(length = 500)
+    @Column(length = 1000)
     private String description;
 
     @Column(name = "type_media", length = 50)
     private String typeMedia;
 
-    @Column(length = 500)
+    @Column(length = 1000)
     private String url;
 
     @Column(name = "publish_date")

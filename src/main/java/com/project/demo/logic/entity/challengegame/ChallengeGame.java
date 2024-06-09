@@ -1,20 +1,12 @@
 package com.project.demo.logic.entity.challengegame;
 
 import com.project.demo.logic.entity.badge.Badge;
-import com.project.demo.logic.entity.exercise.Exercise;
-import com.project.demo.logic.entity.rol.Role;
+import com.project.demo.logic.entity.game.Game;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
-@Table(name = "Challenge_games")
+@Table(name = "Game_challenges")
 @Entity
 public class ChallengeGame {
     @Id
@@ -42,16 +34,16 @@ public class ChallengeGame {
     private Integer objectiveFrecuency;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @Column(name = "badge_id")
+    @JoinColumn(name = "badge_id", referencedColumnName = "badgeId", nullable = false)
     private Badge badgeId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exercise_id", referencedColumnName = "exerciseId", nullable = false)
-    private Exercise exerciseId;
+    @JoinColumn(name = "game_id", referencedColumnName = "gameId", nullable = false)
+    private Game gameId;
 
     public ChallengeGame() {}
 
-    public ChallengeGame(Long challengeId, String title, String description, Date startDate, Date endDate, Integer objectiveScore, Integer objectiveTime, Integer objectiveFrecuency, Badge badgeId, Exercise exerciseId) {
+    public ChallengeGame(Long challengeId, String title, String description, Date startDate, Date endDate, Integer objectiveScore, Integer objectiveTime, Integer objectiveFrecuency, Badge badgeId, Game gameId) {
         this.challengeId = challengeId;
         this.title = title;
         this.description = description;
@@ -61,7 +53,7 @@ public class ChallengeGame {
         this.objectiveTime = objectiveTime;
         this.objectiveFrecuency = objectiveFrecuency;
         this.badgeId = badgeId;
-        this.exerciseId = exerciseId;
+        this.gameId = gameId;
     }
 
     public Long getChallengeId() {
@@ -136,11 +128,11 @@ public class ChallengeGame {
         this.badgeId = badgeId;
     }
 
-    public Exercise getExerciseId() {
-        return exerciseId;
+    public Game getExerciseId() {
+        return gameId;
     }
 
-    public void setExerciseId(Exercise exerciseId) {
-        this.exerciseId = exerciseId;
+    public void setExerciseId(Game gameId) {
+        this.gameId = gameId;
     }
 }
