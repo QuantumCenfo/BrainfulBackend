@@ -17,6 +17,7 @@ public class Reminder {
 
     @Column(name = "reminder_type")
     private String reminderType;
+    private String name;
 
     @Column(name = "reminder_details", length = 1000)
     private String reminderDetails;
@@ -27,10 +28,11 @@ public class Reminder {
 
     public Reminder() {}
 
-    public Reminder(Long reminderId, Date reminderDate, String reminderType, String reminderDetails, User user) {
+    public Reminder(Long reminderId, Date reminderDate, String reminderType, String name, String reminderDetails, User user) {
         this.reminderId = reminderId;
         this.reminderDate = reminderDate;
         this.reminderType = reminderType;
+        this.name = name;
         this.reminderDetails = reminderDetails;
         this.user = user;
     }
@@ -73,5 +75,13 @@ public class Reminder {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

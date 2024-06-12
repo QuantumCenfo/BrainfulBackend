@@ -16,6 +16,7 @@ public class Recommendation {
 
     @Column(name = "recommendation_type")
     private String recommendationType;
+    private Date date;
 
     @Column(length = 1000)
     private String description;
@@ -26,11 +27,20 @@ public class Recommendation {
 
     public Recommendation() {}
 
-    public Recommendation(Long recommendationId, String recommendationType, String description, Form form) {
+    public Recommendation(Long recommendationId, String recommendationType, Date date, String description, Form form) {
         this.recommendationId = recommendationId;
         this.recommendationType = recommendationType;
+        this.date = date;
         this.description = description;
         this.form = form;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Long getRecommendationId() {
