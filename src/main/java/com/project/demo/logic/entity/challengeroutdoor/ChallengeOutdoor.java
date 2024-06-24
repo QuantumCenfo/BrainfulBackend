@@ -16,6 +16,8 @@ public class ChallengeOutdoor {
     @Column(length = 500)
     private String description;
 
+    private String name;
+
     @Column(name = "start_date")
     private Date startDate;
 
@@ -29,13 +31,14 @@ public class ChallengeOutdoor {
 
     public ChallengeOutdoor() {}
 
-    public ChallengeOutdoor(Long outdoorChallengeId, String requirement, String description, Date startDate, Date endDate, Badge badgeId) {
+    public ChallengeOutdoor(Long outdoorChallengeId, String requirement, String description, Date startDate, Date endDate, Badge badgeId,String name) {
         this.outdoorChallengeId = outdoorChallengeId;
         this.requirement = requirement;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.badgeId = badgeId;
+        this.name =name;
     }
 
     public Long getOutdoorChallengeId() {
