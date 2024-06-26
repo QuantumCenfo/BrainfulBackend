@@ -21,7 +21,7 @@ public class User implements UserDetails {
     private String lastname;
     @Column(unique = true, length = 100, nullable = false)
     private String email;
-    @Column(length = 1000)
+    @Column( name= "image", length = 1000)
     private String image;
     @Column(nullable = false)
     private String password;
@@ -49,6 +49,19 @@ public class User implements UserDetails {
 
     // Constructors
     public User() {}
+
+    public User(Long id, String name, String lastname, String email, String image, String password, Date createdAt, Date updatedAt, Date birthDate, Role role) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.image = image;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.birthDate = birthDate;
+        this.role = role;
+    }
 
     public String getImage() {
         return image;
