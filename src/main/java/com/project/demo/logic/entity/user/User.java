@@ -21,7 +21,8 @@ public class User implements UserDetails {
     private String lastname;
     @Column(unique = true, length = 100, nullable = false)
     private String email;
-
+    @Column(length = 1000)
+    private String image;
     @Column(nullable = false)
     private String password;
 
@@ -49,6 +50,13 @@ public class User implements UserDetails {
     // Constructors
     public User() {}
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
