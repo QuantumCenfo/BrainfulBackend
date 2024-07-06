@@ -15,6 +15,8 @@ public class ParticipationChallenge {
 
     private String status;
 
+    @Column(name = "level_difficulty", length = 50)
+    private String levelDifficulty;
     @Column(name = "end_date")
     private Date endDate;
 
@@ -34,9 +36,10 @@ public class ParticipationChallenge {
 
     public ParticipationChallenge() {}
 
-    public ParticipationChallenge(Long participationGameId, String status, Date endDate, Integer objectiveScoreChallenge, Integer objectiveTimeChallenge, ChallengeGame challengeId, User userId) {
+    public ParticipationChallenge(Long participationGameId, String status, String levelDifficulty, Date endDate, Integer objectiveScoreChallenge, Integer objectiveTimeChallenge, ChallengeGame challengeId, User userId) {
         this.participationGameId = participationGameId;
         this.status = status;
+        this.levelDifficulty = levelDifficulty;
         this.endDate = endDate;
         this.objectiveScoreChallenge = objectiveScoreChallenge;
         this.objectiveTimeChallenge = objectiveTimeChallenge;
@@ -74,6 +77,22 @@ public class ParticipationChallenge {
 
     public void setObjectiveScoreChallenge(Integer objectiveScoreChallenge) {
         this.objectiveScoreChallenge = objectiveScoreChallenge;
+    }
+
+    public Long getParticipationGameId() {
+        return participationGameId;
+    }
+
+    public void setParticipationGameId(Long participationGameId) {
+        this.participationGameId = participationGameId;
+    }
+
+    public String getLevelDifficulty() {
+        return levelDifficulty;
+    }
+
+    public void setLevelDifficulty(String levelDifficulty) {
+        this.levelDifficulty = levelDifficulty;
     }
 
     public Integer getObjectiveTimeChallenge() {

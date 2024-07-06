@@ -17,17 +17,16 @@ public class Game {
     @Column(name = "type_exercise", length = 50)
     private String tipoEjercicio;
 
-    @Column(name = "level_difficulty", length = 50)
-    private String levelDifficulty;
+
 
     public Game() {}
 
-    public Game(Long exerciseId, String name, String description, String tipoEjercicio, String levelDifficulty) {
+    public Game(Long exerciseId, String name, String description, String tipoEjercicio) {
         this.gameId = exerciseId;
         this.name = name;
         this.description = description;
         this.tipoEjercicio = tipoEjercicio;
-        this.levelDifficulty = levelDifficulty;
+
     }
 
     public Long getgameId() {
@@ -60,13 +59,5 @@ public class Game {
 
     public void setTipoEjercicio(String tipoEjercicio) {
         this.tipoEjercicio = tipoEjercicio;
-    }
-
-    public String getLevelDifficulty() {
-        return levelDifficulty;
-    }
-
-    public void setLevelDifficulty(String levelDifficulty) {
-        this.levelDifficulty = levelDifficulty;
     }
 }
