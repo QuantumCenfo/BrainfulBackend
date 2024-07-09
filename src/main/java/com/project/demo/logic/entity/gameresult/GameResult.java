@@ -43,6 +43,7 @@ public class GameResult {
         this.gameId = gameId;
     }
 
+
     public Long getResultId() {
         return resultId;
     }
@@ -91,11 +92,13 @@ public class GameResult {
         this.userId = userId;
     }
 
-    public Game getExerciseId() {
+
+
+    public Game getGameId() {
         return gameId;
     }
 
-    public void setExerciseId(Game gameId) {
+    public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
 }

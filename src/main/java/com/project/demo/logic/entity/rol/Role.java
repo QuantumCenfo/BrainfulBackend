@@ -68,4 +68,5 @@ public class Role {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }
