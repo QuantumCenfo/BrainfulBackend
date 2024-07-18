@@ -1,4 +1,4 @@
-package com.project.demo.rest.user;
+package com.project.demo.rest.game;
 
 import com.project.demo.logic.entity.game.Game;
 import com.project.demo.logic.entity.game.GameRepository;
@@ -41,7 +41,7 @@ public class GameRestController {
 
 
     @DeleteMapping("/{id}")
-    public void deletGame(@PathVariable Long id) {
+    public void deleteGame(@PathVariable Long id) {
         gameRepository.deleteById(id);
     }
 
