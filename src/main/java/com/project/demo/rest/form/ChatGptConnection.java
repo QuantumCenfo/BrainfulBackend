@@ -20,9 +20,9 @@ public class ChatGptConnection {
     }
 
     public String createPrompt(Form form) {
-        return "Por favor, genera dos recomendaciones, una a corto plazo y otra a largo plazo, en el siguiente formato JSON basado en los siguientes datos: " +
-                "[{ \"description\": \"\", \"recommendation_type\": \"\" }, { \"description\": \"\", \"recommendation_type\": \"\" }]. " +
-                "En recommendation_type por favor indica si es de corto plazo o largo plazo. Porfavor siempre ponlo en español " +
+        return "Por favor, genera dos recomendaciones, una a corto plazo y otra a largo plazo, en el siguiente formato JSON+\n" +
+                "\"[{ \\\"description\\\": \\\"\\\", \\\"recommendation_type\\\": \\\"\\\" }, { \\\"description\\\": \\\"\\\", \\\"recommendation_type\\\": \\\"\\\" }]. \" + basado en los siguientes datos: "
+                + "En recommendation_type por favor indica si es de corto plazo o largo plazo. Porfavor siempre ponlo en español " +
                 "Datos: " +
                 "Edad: " + form.getAge() +
                 ", Horas de sueño: " + form.getSleepHours() +
