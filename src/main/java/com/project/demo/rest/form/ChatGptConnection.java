@@ -22,22 +22,22 @@ public class ChatGptConnection {
     public String createPrompt(Form form) {
         return "Por favor, genera dos recomendaciones, una a corto plazo y otra a largo plazo, en el siguiente formato JSON+\n" +
                 "\"[{ \\\"description\\\": \\\"\\\", \\\"recommendation_type\\\": \\\"\\\" }, { \\\"description\\\": \\\"\\\", \\\"recommendation_type\\\": \\\"\\\" }]. \" + basado en los siguientes datos: "
-                + "En recommendation_type por favor indica si es de corto plazo o largo plazo. Porfavor siempre ponlo en español " +
+                + "En recommendation_type por favor indica si es de corto plazo o largo plazo. Porfavor siempre ponlo en español, no olvides verificar que los dos campos esten llenos y que nada este incompleto " +
                 "Datos: " +
                 "Edad: " + form.getAge() +
                 ", Horas de sueño: " + form.getSleepHours() +
-                ", Días de ejercicio: " + form.getExerciseDays() +
+                ", Días de ejercicio a la semana : " + form.getExerciseDays() +
                 ", Uso de drogas: " + form.getUseDrugs() +
                 ", Uso de alcohol: " + form.getUseAlcohol() +
                 ", Género: " + form.getGender() +
                 ", Trabajo: " + form.getJob() +
-                ", Nivel educativo: " + form.getEduacationLevel() +
-                ", Historia familiar: " + form.getFamilyHistory() +
+                ", Nivel educativo alcanzado: " + form.getEduacationLevel() +
+                ", Historial familiar: " + form.getFamilyHistory() +
                 ", Condición médica: " + form.getMedicalCondition() +
                 ", Enfermedad mental: " + form.getMentalIllness() +
                 ", Tipo de dieta: " + form.getDietType() +
-                ", Tiempo en pantalla: " + form.getScreenTime() +
-                ", Manejo del estrés: " + form.getStressManagement();
+                ", Horas en pantalla por dia  " + form.getScreenTime() +
+                ", Tecnica de manejo del estrés: " + form.getStressManagement();
     }
 
     public String connectToGPT(String prompt) {
