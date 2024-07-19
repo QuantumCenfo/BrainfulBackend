@@ -23,7 +23,7 @@ public class RecommendationRestController {
     @Autowired
     private FormRepository formRepository;
 
-    @GetMapping("/{userId}")
+    @GetMapping("user/{userId}")
     public List<Recommendation> getRecommendationsByUserId(@PathVariable Long userId) {
         List<Form> forms = formRepository.findByUserId(userId);
         return forms.stream()
@@ -31,10 +31,10 @@ public class RecommendationRestController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping
-//    public List<Recommendation> getAllRecommendations() {
-//        return recommendationRepository.findAll();
-//    }
+    @GetMapping
+    public List<Recommendation> getAllRecommendations() {
+        return recommendationRepository.findAll();
+    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN,','USER')")
@@ -42,10 +42,10 @@ public class RecommendationRestController {
         return recommendationRepository.save(recommendation);
     }
 
-//    @GetMapping("/{recommendationId}")
-//    public Recommendation getRecommendationById(@PathVariable Long id) {
-//        return recommendationRepository.findById(id).orElseThrow(RuntimeException::new);
-//    }
+    @GetMapping("/{recommendationId}")
+    public Recommendation getRecommendationById(@PathVariable Long id) {
+        return recommendationRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteRecommendation(@PathVariable Long id) {
