@@ -128,11 +128,11 @@ public class ChallengeGame {
         this.badgeId = badgeId;
     }
 
-    public Game getExerciseId() {
+    public Game getGameId() {
         return gameId;
     }
 
-    public void setExerciseId(Game gameId) {
+    public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
 }
