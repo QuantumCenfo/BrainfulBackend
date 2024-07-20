@@ -2,6 +2,7 @@ package com.project.demo.logic.entity.badge;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 

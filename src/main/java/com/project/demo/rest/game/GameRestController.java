@@ -28,7 +28,7 @@ public class GameRestController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN,','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
     public Game addGame(@RequestBody Game game) {
         return gameRepository.save(game);
     }
