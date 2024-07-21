@@ -38,3 +38,4 @@ replay_pid*
 
 *.properties
 src/main/resources/application.properties
+*.properties
