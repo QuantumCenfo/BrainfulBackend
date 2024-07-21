@@ -53,4 +53,23 @@ public class BadgeRestController {
     public void deleteBadge(@PathVariable Long id) {
          badgeRepository.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public Badge updateBadge(@PathVariable Long id, @RequestPart("badge") String badgeJson, @RequestPart("image") MultipartFile image) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Badge badge = objectMapper.readValue(badgeJson, Badge.class);
+        String imageUrl = azureBlobAdapter.upload(image);
+        badge.setUrl(imageUrl);
+        return badgeRepository.findById(id)
+                .map(existingBadge ->{
+                    existingBadge.setTitle(badge.getTitle());
+                    existingBadge.setDescription(badge.getDescription());
+                    existingBadge.setUrl(badge.getUrl());
+                    return badgeRepository.save(existingBadge);
+                })
+                .orElseGet(()->{
+                    badge.setBadgeId(id);
+                    return badgeRepository.save(badge);
+                });
+    }
 }
