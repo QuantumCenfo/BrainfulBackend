@@ -12,4 +12,7 @@ public interface ChallengeGameRepository extends JpaRepository<ChallengeGame, Lo
     @Query("SELECT cg FROM ChallengeGame cg WHERE cg.endDate > :currentDate")
     List<ChallengeGame> findAllActiveChallenges(@Param("currentDate") Date currentDate);
 
+    @Query("SELECT cg FROM ChallengeGame cg WHERE cg.endDate <= :currentDate")
+    List<ChallengeGame> findAllInactiveChallenges(@Param("currentDate") Date currentDate);
+
 }
