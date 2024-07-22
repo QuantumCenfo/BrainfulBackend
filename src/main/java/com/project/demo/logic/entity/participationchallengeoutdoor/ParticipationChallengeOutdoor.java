@@ -32,4 +32,60 @@ public class ParticipationChallengeOutdoor {
     private ChallengeOutdoor challengeOutdoor;
 
     public ParticipationChallengeOutdoor() {}
+
+    public Long getParticipationOutdoorId() {
+        return participationOutdoorId;
+    }
+
+    public void setParticipationOutdoorId(Long participationOutdoorId) {
+        this.participationOutdoorId = participationOutdoorId;
+    }
+
+    public String getEvidence() {
+        return evidence;
+    }
+
+    public void setEvidence(String evidence) {
+        this.evidence = evidence;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public Date getFechaRevision() {
+        return fechaRevision;
+    }
+
+    public void setFechaRevision(Date fechaRevision) {
+        this.fechaRevision = fechaRevision;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ChallengeOutdoor getChallengeOutdoor() {
+        return challengeOutdoor;
+    }
+
+    public void setChallengeOutdoor(ChallengeOutdoor challengeOutdoor) {
+        this.challengeOutdoor = challengeOutdoor;
+    }
 }
