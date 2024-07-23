@@ -31,7 +31,19 @@ public class ParticipationChallengeOutdoor {
     @JoinColumn(name = "desafio_externo_id", referencedColumnName = "outdoorChallengeId", nullable = false)
     private ChallengeOutdoor challengeOutdoor;
 
-    public ParticipationChallengeOutdoor() {}
+    public ParticipationChallengeOutdoor() {
+
+    }
+
+    public ParticipationChallengeOutdoor(Long participationOutdoorId, String evidence, String status, Date fechaPublicacion, Date fechaRevision, User user, ChallengeOutdoor challengeOutdoor) {
+        this.participationOutdoorId = participationOutdoorId;
+        this.evidence = evidence;
+        this.status = status;
+        this.fechaPublicacion = fechaPublicacion;
+        this.fechaRevision = fechaRevision;
+        this.user = user;
+        this.challengeOutdoor = challengeOutdoor;
+    }
 
     public Long getParticipationOutdoorId() {
         return participationOutdoorId;
