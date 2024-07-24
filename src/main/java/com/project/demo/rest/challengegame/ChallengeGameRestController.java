@@ -18,13 +18,13 @@ public class ChallengeGameRestController {
     @Autowired
     private ChallengeGameRepository challengeGameRepository;
     @GetMapping("/active-challenges")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
     public List<ChallengeGame> getAllActiveChallenges() {
         Date currentDate = new Date();
         return challengeGameRepository.findAllActiveChallenges(currentDate);
     }
     @GetMapping("/inactive-challenges")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
     public List<ChallengeGame> getAllInactiveChallenges() {
         Date currentDate = new Date();
         return challengeGameRepository.findAllInactiveChallenges(currentDate);
