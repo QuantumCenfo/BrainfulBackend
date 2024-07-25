@@ -49,4 +49,10 @@ public class ChallengeGameRestController {
                     return challengeGameRepository.save(challengeGame);
                 });
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    public void deleteChallengeGame(@PathVariable Long id) {
+        challengeGameRepository.deleteById(id);
+    }
 }
