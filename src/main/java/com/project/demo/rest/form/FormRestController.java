@@ -2,11 +2,14 @@ package com.project.demo.rest.form;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.demo.logic.entity.ErrorResponse;
 import com.project.demo.logic.entity.form.Form;
 import com.project.demo.logic.entity.form.FormRepository;
 import com.project.demo.logic.entity.recommendation.Recommendation;
 import com.project.demo.logic.entity.recommendation.RecommendationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -28,13 +31,13 @@ public class FormRestController {
         return formRepository.findAll();
     }
     @PostMapping
-    public Form addForm(@RequestBody Form form) {
-        formRepository.save(form);
-        String prompt = chatGptConnection.createPrompt(form);
-        String gptResponse = chatGptConnection.connectToGPT(prompt);
-
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResponseEntity<?> addForm(@RequestBody Form form) {
         try {
+            formRepository.save(form);
+            String prompt = chatGptConnection.createPrompt(form);
+            String gptResponse = chatGptConnection.connectToGPT(prompt);
+
+            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonResponse = objectMapper.readTree(gptResponse);
             String messageContent = jsonResponse.get("choices").get(0).get("message").get("content").asText();
             JsonNode contentArray = objectMapper.readTree(messageContent);
@@ -51,12 +54,16 @@ public class FormRestController {
                 recommendationRepository.save(recommendation);
             }
 
+            return ResponseEntity.ok(form); // Return success response
+
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("An error occurred while processing the request.",""));
         }
-
-        return form;
     }
+
+
 
     @GetMapping("/{id}")
     public Form getFormbyId(@PathVariable Long id) {

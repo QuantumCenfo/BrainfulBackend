@@ -9,9 +9,11 @@ import com.project.demo.logic.entity.participationchallengeoutdoor.Participation
 import com.project.demo.logic.entity.participationchallengeoutdoor.ParticipationOutdoorRepository;
 import com.project.demo.logic.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,14 +33,38 @@ public class ParticipationOutDoorRestController {
         return participationOutdoorRepository.findAll();
     }
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ParticipationChallengeOutdoor addParticipationOutdoor(@RequestPart("participationOutdoor") String participationoutdoorjson, @RequestPart("image") MultipartFile image) throws IOException {
+
+
+    public ParticipationChallengeOutdoor addParticipationOutdoor(
+            @RequestPart("participationOutdoor") String participationoutdoorjson,
+            @RequestPart("image") MultipartFile image) throws IOException {
+
         ObjectMapper objectMapper = new ObjectMapper();
         ParticipationChallengeOutdoor participationChallengeOutdoor = objectMapper.readValue(participationoutdoorjson, ParticipationChallengeOutdoor.class);
+
+        Long userId = participationChallengeOutdoor.getUser().getId();
+        Long challengeOutdoorId = participationChallengeOutdoor.getChallengeOutdoor().getOutdoorChallengeId();
+        String status = participationChallengeOutdoor.getStatus();
+
+        // Buscar participaciones existentes con el mismo userId y challengeOutdoorId
+        List<ParticipationChallengeOutdoor> existingParticipations = participationOutdoorRepository.findByUser_IdAndChallengeOutdoor_OutdoorChallengeId(userId, challengeOutdoorId);
+
+
+        boolean isInvalidStateExist = existingParticipations.stream()
+                .anyMatch(p -> !("rechazada".equals(p.getStatus())));
+
+        if (isInvalidStateExist) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A participation with the same user and challenge already exists with a status other than pendiente or revisado.");
+        }
+
+        // Subir imagen y guardar participación
         String imageUrl = azureBlobAdapter.upload(image);
         participationChallengeOutdoor.setEvidence(imageUrl);
         return participationOutdoorRepository.save(participationChallengeOutdoor);
     }
+
+
+
     @PutMapping("/{id}")
     public ParticipationChallengeOutdoor updateParticipation(
             @PathVariable Long id,
