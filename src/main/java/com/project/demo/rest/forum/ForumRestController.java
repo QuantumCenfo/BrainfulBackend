@@ -6,6 +6,7 @@ import com.project.demo.logic.entity.forum.ForumRepository;
 import com.project.demo.logic.entity.comment.Comment;
 import com.project.demo.logic.entity.comment.CommentRepository;
 
+import com.project.demo.logic.entity.game.Game;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,10 +28,9 @@ public class ForumRestController {
         return forumRepository.findAll();
     }
 
-    // Get de todos los comentarios de un foro
-    @GetMapping("ForumId/{id}")
-    public List<Comment> GetAllComments(@PathVariable Long id) {
-        return commentRepository.findByForumForumId(id);
+    @GetMapping("/{id}")
+    public Forum getForumbyId(@PathVariable Long id) {
+        return forumRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     // Get de todos los foros de un usuario
@@ -47,13 +47,6 @@ public class ForumRestController {
         return forumRepository.save(forum);
     }
 
-    // Insert de comentario en un foro
-    @PostMapping("ForumId/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public Comment addComment(@RequestBody Comment comment) {
-        return commentRepository.save(comment);
-    }
-
     // Borra un foro y todos los comentarios que tenga ligado este mismo
     @Transactional
     @DeleteMapping("/{id}")
@@ -61,28 +54,6 @@ public class ForumRestController {
     public void deleteForum(@PathVariable Long id) {
         commentRepository.deleteByForumForumId(id);
         forumRepository.deleteById(id);
-    }
-
-    // Borra un comentario de unn foro, este funciona siempre
-    @DeleteMapping("ForumId/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public void deleteComment(@PathVariable Long id) {
-        commentRepository.deleteById(id);
-    }
-
-    // Edita un comentario
-    @PutMapping("ForumId/{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
-        return commentRepository.findById(id)
-                .map(existingUser -> {
-                    existingUser.setContent(comment.getContent());
-                    existingUser.setAnonymous(comment.getAnonymous());
-                    return commentRepository.save(existingUser);
-                })
-                .orElseGet(() -> {
-                    comment.setCommentId(id);
-                    return commentRepository.save(comment);
-                });
     }
 
 }
