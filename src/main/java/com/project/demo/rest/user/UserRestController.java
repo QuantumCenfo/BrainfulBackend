@@ -1,5 +1,7 @@
 package com.project.demo.rest.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.demo.logic.entity.Azure.AzureBlobService;
 import com.project.demo.logic.entity.user.User;
 import com.project.demo.logic.entity.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,6 +21,9 @@ import java.util.List;
 public class UserRestController {
     @Autowired
     private UserRepository UserRepository;
+
+    @Autowired
+    private AzureBlobService azureBlobAdapter;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,8 +35,14 @@ public class UserRestController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User addUser(@RequestPart("user") String userJson, @RequestPart("image") MultipartFile imageUser) throws IOException {
+        System.out.println(userJson);
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(userJson, User.class);
+
+        String image = azureBlobAdapter.upload(imageUser);
+        user.setImage(image);
+
         return UserRepository.save(user);
     }
 
@@ -43,12 +57,26 @@ public class UserRestController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    public User updateUser(
+            @PathVariable Long id,
+            @RequestPart("user") String userJson,
+            @RequestPart(value = "image", required = false) MultipartFile imageUser) throws IOException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        User user = objectMapper.readValue(userJson, User.class);
+
+        String image = imageUser != null ? azureBlobAdapter.upload(imageUser) : null;
+        if (image != null) {
+            user.setImage(image);
+        }
+
         return UserRepository.findById(id)
                 .map(existingUser -> {
                     existingUser.setName(user.getName());
                     existingUser.setLastname(user.getLastname());
                     existingUser.setEmail(user.getEmail());
+                    existingUser.setImage(user.getImage());
+                    existingUser.setBirthDate(user.getBirthDate());
                     return UserRepository.save(existingUser);
                 })
                 .orElseGet(() -> {

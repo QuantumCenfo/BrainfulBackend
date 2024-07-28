@@ -40,12 +40,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //curita consultar con profe
-
         if (role == null) {
             return Collections.emptyList();
         }
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName());
         return Collections.singletonList(authority);
     }
 
@@ -166,7 +164,6 @@ public class User implements UserDetails {
 
     public User setRole(Role role) {
         this.role = role;
-
         return this;
     }
 
