@@ -1,4 +1,4 @@
-package com.project.demo.rest.user;
+package com.project.demo.rest.game;
 
 import com.project.demo.logic.entity.game.Game;
 import com.project.demo.logic.entity.game.GameRepository;
@@ -28,7 +28,7 @@ public class GameRestController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN,','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
     public Game addGame(@RequestBody Game game) {
         return gameRepository.save(game);
     }
@@ -41,7 +41,7 @@ public class GameRestController {
 
 
     @DeleteMapping("/{id}")
-    public void deletGame(@PathVariable Long id) {
+    public void deleteGame(@PathVariable Long id) {
         gameRepository.deleteById(id);
     }
 
