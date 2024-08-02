@@ -30,13 +30,16 @@ public class BadgeRestController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-    public Badge addBadge(@RequestPart("badge") String badgeJson, @RequestPart("image") MultipartFile image) throws IOException {
+    public Badge addBadge(@RequestPart("badge") String badgeJson, @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
         // Parse the JSON string into a Badge object
         ObjectMapper objectMapper = new ObjectMapper();
         Badge badge = objectMapper.readValue(badgeJson, Badge.class);
 
         String imageUrl = azureBlobAdapter.upload(image);
+        if (image != null && !image.isEmpty()) {
+            badge.setUrl(imageUrl);
+        }
         badge.setUrl(imageUrl);
 
 
@@ -55,11 +58,16 @@ public class BadgeRestController {
     }
 
     @PutMapping("/{id}")
-    public Badge updateBadge(@PathVariable Long id, @RequestPart("badge") String badgeJson, @RequestPart("image") MultipartFile image) throws IOException {
+    public Badge updateBadge(@PathVariable Long id, @RequestPart("badge") String badgeJson, @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Badge badge = objectMapper.readValue(badgeJson, Badge.class);
-        String imageUrl = azureBlobAdapter.upload(image);
-        badge.setUrl(imageUrl);
+
+
+        String imageUrl = image !=null? azureBlobAdapter.upload(image): null;
+        if (image != null ) {
+            badge.setUrl(imageUrl);
+        }
+       
         return badgeRepository.findById(id)
                 .map(existingBadge ->{
                     existingBadge.setTitle(badge.getTitle());
