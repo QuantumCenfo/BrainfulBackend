@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.demo.logic.entity.Azure.AzureBlobService;
 import com.project.demo.logic.entity.badge.Badge;
 import com.project.demo.logic.entity.badge.BadgeRepository;
+import com.project.demo.logic.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +48,13 @@ public class BadgeRestController {
     }
 
 
-    @GetMapping("/{badgeName}")
+    @GetMapping("name/{badgeName}")
     public Badge getBadgeByName(@PathVariable String badgeName) {
         return badgeRepository.findByName(badgeName).orElseThrow(RuntimeException::new);
+    }
+    @GetMapping("id/{id}")
+    public Badge getUserById(@PathVariable Long id) {
+        return badgeRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @DeleteMapping("/{id}")
