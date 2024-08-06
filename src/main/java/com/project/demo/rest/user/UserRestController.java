@@ -46,13 +46,19 @@ public class UserRestController {
         System.out.println(userJson);
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(userJson, User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Optional<Role> optionalRole = roleRepository.findById(user.getRole().getId());
 
         String image = azureBlobAdapter.upload(imageUser);
+        if (optionalRole.isEmpty()) {
+            return null;
+        }
         if(imageUser!=null && !imageUser.isEmpty()){
             user.setImage(image);
         }else{
             user.setImage(image);
         }
+        user.setRole(optionalRole.get());
 
 
         return UserRepository.save(user);
@@ -76,7 +82,10 @@ public class UserRestController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(userJson, User.class);
-
+        Optional<Role> optionalRole = roleRepository.findById(user.getRole().getId());
+        if (optionalRole.isEmpty()) {
+            return null;
+        }
 
 
         String image = imageUser != null ? azureBlobAdapter.upload(imageUser) : null;
