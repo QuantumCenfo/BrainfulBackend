@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/medias")
+@RequestMapping("/media")
 public class MediaRestController {
 
     @Autowired
