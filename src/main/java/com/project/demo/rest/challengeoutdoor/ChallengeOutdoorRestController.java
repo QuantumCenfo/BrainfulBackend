@@ -19,19 +19,19 @@ public class ChallengeOutdoorRestController {
     @Autowired
     private ChallengeOutdoorRepository challengeOutdoorRepository;
 
-    @GetMapping("/active-challenges")
+    @GetMapping("/challenges")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public List<ChallengeOutdoor> getAllActiveChallenges() {
+    public List<ChallengeOutdoor> getChallengesByStatus(@RequestParam("status") String status) {
         Date currentDate = new Date();
-        return challengeOutdoorRepository.findAllActiveChallenges(currentDate);
+        if ("active".equalsIgnoreCase(status)) {
+            return challengeOutdoorRepository.findAllActiveChallenges(currentDate);
+        } else if ("inactive".equalsIgnoreCase(status)) {
+            return challengeOutdoorRepository.findAllInactiveChallenges(currentDate);
+        } else {
+            throw new IllegalArgumentException("Invalid status: " + status);
+        }
     }
 
-    @GetMapping("/inactive-challenges")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public List<ChallengeOutdoor> getAllInactiveChallenges() {
-        Date currentDate = new Date();
-        return challengeOutdoorRepository.findAllInactiveChallenges(currentDate);
-    }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
