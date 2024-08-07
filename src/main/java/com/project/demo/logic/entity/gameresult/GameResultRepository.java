@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface GameResultRepository extends JpaRepository<GameResult, Long> {
 
-    @Query("SELECT GR FROM GameResult GR WHERE GR.userId.id = ?1")
+    @Query("SELECT GR FROM GameResult GR WHERE GR.userId.id = ?1   order by GR.score desc")
     List<GameResult> findGameResultByUserId(Long userID);
 
 }
