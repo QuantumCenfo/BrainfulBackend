@@ -26,8 +26,8 @@ public class UserBadgeRestController {
     }
 
 
-    @GetMapping("/{id}")
-    public List<Badge> getUserBadgeById(@RequestParam Long userID) {
+    @GetMapping("/{userID}")
+    public List<UserBadge> getUserBadgeById(@PathVariable Long userID) {
         return userBadgeRepository.findByUserId(userID);
     }
 

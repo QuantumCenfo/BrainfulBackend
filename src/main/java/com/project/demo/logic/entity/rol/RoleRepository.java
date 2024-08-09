@@ -8,4 +8,7 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Integer> {
     Optional<Role> findByName(RoleEnum name);
+
+    @Override
+    Optional<Role> findById(Integer integer);
 }

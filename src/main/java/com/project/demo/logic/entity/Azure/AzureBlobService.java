@@ -23,6 +23,9 @@ public class AzureBlobService {
     BlobContainerClient blobContainerClient;
 
     public String upload(MultipartFile multipartFile) throws IOException{
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            return null; // Return null or handle accordingly if file is null or empty
+        }
         BlobClient blobClient = blobContainerClient.getBlobClient(multipartFile.getOriginalFilename());
 
 

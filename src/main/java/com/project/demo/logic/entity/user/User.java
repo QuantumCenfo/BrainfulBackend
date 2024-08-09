@@ -1,4 +1,6 @@
 package com.project.demo.logic.entity.user;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.demo.logic.entity.auth.SimpleGrantedAutho;
 import com.project.demo.logic.entity.rol.Role;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Table(name = "user")
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private List<SimpleGrantedAutho> authorities;
+
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
@@ -37,6 +42,8 @@ public class User implements UserDetails {
 
     @Column(name = "birth_date")
     private Date birthDate;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -103,6 +110,10 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public void setAuthorities(List<SimpleGrantedAutho> authorities) {
+        this.authorities = authorities;
     }
 
     public void setId(Long id) {
