@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface UserBadgeRepository extends JpaRepository<UserBadge, Long> {
 
-    @Query("SELECT b FROM UserBadge bu INNER JOIN Badge b ON bu.badge.badgeId = b.badgeId WHERE bu.user.id = ?1  ")
-    List<Badge> findByUserId(Long userId);
+    @Query("SELECT bu FROM UserBadge bu INNER JOIN Badge b ON bu.badge.badgeId = b.badgeId WHERE bu.user.id = ?1  ")
+    List<UserBadge> findByUserId(Long userId);
 
 }
 

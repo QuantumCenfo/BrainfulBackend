@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -32,36 +33,43 @@ public class FormRestController {
     }
     @PostMapping
     public ResponseEntity<?> addForm(@RequestBody Form form) {
+
+
         try {
+
             formRepository.save(form);
             String prompt = chatGptConnection.createPrompt(form);
             String gptResponse = chatGptConnection.connectToGPT(prompt);
-
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonResponse = objectMapper.readTree(gptResponse);
             String messageContent = jsonResponse.get("choices").get(0).get("message").get("content").asText();
             JsonNode contentArray = objectMapper.readTree(messageContent);
+            if (!contentArray.isArray()) {
+                throw new RuntimeException("Expected JSON array in message content");
+            }
+
 
             for (JsonNode recommendationNode : contentArray) {
                 String description = recommendationNode.get("description").asText();
                 String recommendationType = recommendationNode.get("recommendation_type").asText();
-
                 Recommendation recommendation = new Recommendation();
                 recommendation.setForm(form);
                 recommendation.setDate(new Date());
                 recommendation.setRecommendationType(recommendationType);
                 recommendation.setDescription(description);
+
+
                 recommendationRepository.save(recommendation);
             }
-
-            return ResponseEntity.ok(form); // Return success response
+            return ResponseEntity.ok(form);
 
         } catch (Exception e) {
-            e.printStackTrace();
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("An error occurred while processing the request.",""));
+                    .body(new ErrorResponse("An error occurred while processing the request.", ""));
         }
     }
+
 
 
 

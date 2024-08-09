@@ -17,18 +17,19 @@ public class ChallengeGameRestController {
 
     @Autowired
     private ChallengeGameRepository challengeGameRepository;
-    @GetMapping("/active-challenges")
+    @GetMapping("/challenges")
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public List<ChallengeGame> getAllActiveChallenges() {
+    public List<ChallengeGame> getChallengesByStatus(@RequestParam("status") String status) {
         Date currentDate = new Date();
-        return challengeGameRepository.findAllActiveChallenges(currentDate);
+        if ("active".equalsIgnoreCase(status)) {
+            return challengeGameRepository.findAllActiveChallenges(currentDate);
+        } else if ("inactive".equalsIgnoreCase(status)) {
+            return challengeGameRepository.findAllInactiveChallenges(currentDate);
+        } else {
+            throw new IllegalArgumentException("Invalid status: " + status);
+        }
     }
-    @GetMapping("/inactive-challenges")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN','USER')")
-    public List<ChallengeGame> getAllInactiveChallenges() {
-        Date currentDate = new Date();
-        return challengeGameRepository.findAllInactiveChallenges(currentDate);
-    }
+
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
