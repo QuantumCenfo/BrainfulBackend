@@ -26,7 +26,8 @@ dependencies {
 
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.1.2' // Or the latest stable version
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
