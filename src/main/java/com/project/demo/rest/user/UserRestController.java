@@ -1,5 +1,8 @@
 package com.project.demo.rest.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.demo.logic.entity.Azure.AzureBlobService;
 import com.project.demo.logic.entity.rol.Role;
@@ -23,6 +26,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/users")
 public class UserRestController {
+    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
+
     @Autowired
     private UserRepository UserRepository;
 
@@ -43,7 +48,7 @@ public class UserRestController {
 
     @PostMapping
     public User addUser(@RequestPart("user") String userJson, @RequestPart(value = "image", required = false) MultipartFile imageUser) throws IOException {
-        System.out.println(userJson);
+        logger.info(userJson);
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(userJson, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -53,11 +58,8 @@ public class UserRestController {
         if (optionalRole.isEmpty()) {
             return null;
         }
-        if(imageUser!=null && !imageUser.isEmpty()){
-            user.setImage(image);
-        }else{
-            user.setImage(image);
-        }
+        user.setImage(image);
+
         user.setRole(optionalRole.get());
 
 

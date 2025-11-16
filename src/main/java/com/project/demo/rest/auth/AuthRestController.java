@@ -11,6 +11,7 @@ import com.project.demo.logic.entity.user.LoginResponse;
 import com.project.demo.logic.entity.user.User;
 import com.project.demo.logic.entity.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -75,27 +76,39 @@ public class AuthRestController {
 //        return ResponseEntity.ok(savedUser);
 //    }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestPart("user") String userJson, @RequestPart(value = "image", required = false) MultipartFile imageUser )throws IOException {
+    @PostMapping(
+            value = "/signup",
+            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE }
+    )
+    public ResponseEntity<?> registerUser(
+            // used when Content-Type is application/json
+            @RequestBody(required = false) User userBody,
 
-        ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(userJson, User.class);
+            // used when Content-Type is multipart/form-data
+            @RequestPart(value = "user", required = false) String userJson,
+            @RequestPart(value = "image", required = false) MultipartFile imageUser
+    ) throws IOException {
 
-        String image = azureBlobAdapter.upload(imageUser);
+        User user;
+        if (userBody != null) {
+            user = userBody; // JSON flow
+        } else if (userJson != null) {
+            user = new ObjectMapper().readValue(userJson, User.class); // multipart flow
+        } else {
+            return ResponseEntity.badRequest().body("Missing user payload");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
+        Role role = roleRepository.findByName(RoleEnum.USER)
+                .orElseThrow(() -> new IllegalStateException("Role USER not found"));
+        user.setRole(role);
 
-        if (optionalRole.isEmpty()) {
-            return null;
+        if (imageUser != null && !imageUser.isEmpty()) {
+            String imageUrl = azureBlobAdapter.upload(imageUser);
+            user.setImage(imageUrl);
         }
-        if (imageUser!=null && !imageUser.isEmpty()) {
-            user.setImage(image);
-        }else {
-            user.setImage(image);
-        }
-        user.setRole(optionalRole.get());
-        User savedUser = userRepository.save(user);
-        return ResponseEntity.ok(savedUser);
+
+        return ResponseEntity.ok(userRepository.save(user));
     }
 
 }

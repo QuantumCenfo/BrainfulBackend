@@ -3,8 +3,6 @@ package com.project.demo.rest.recommendation;
 
 import com.project.demo.logic.entity.form.Form;
 import com.project.demo.logic.entity.form.FormRepository;
-import com.project.demo.logic.entity.game.Game;
-import com.project.demo.logic.entity.game.GameRepository;
 import com.project.demo.logic.entity.recommendation.Recommendation;
 import com.project.demo.logic.entity.recommendation.RecommendationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
