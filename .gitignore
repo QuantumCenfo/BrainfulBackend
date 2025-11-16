@@ -2,6 +2,8 @@
 *.class
 src/main/resources/application.properties
 
+*docs/
+
 # Log file
 *.log
 .idea/

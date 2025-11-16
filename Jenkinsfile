@@ -1,5 +1,7 @@
 pipeline {
-	agent { docker { image 'gradle:8.10.2-jdk21' args '-v $HOME/.gradle:/home/gradle/.gradle' } }
+	agent { docker { image 'gradle:8.10.2-jdk21' 
+					 args '-v $HOME/.gradle:/home/gradle/.gradle' 
+	volumes '-v /var/run/docker.sock:/var/run/docker.sock' } }
 	options { timestamps() }
 	environment { CI = 'true' }
 	stages {
@@ -21,7 +23,11 @@ pipeline {
 			}
 		}
 		stage('Quality Gate') {
-			steps { timeout(time: 15, unit: 'MINUTES') { waitForQualityGate() } }
+			steps {
+				timeout(time: 15, unit: 'MINUTES') {
+				waitForQualityGate abortPipeline: true
+				}
+			}
 		}
 	}
 }
