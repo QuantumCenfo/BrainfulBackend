@@ -10,9 +10,11 @@ pipeline {
 	stages {
 		stage('Checkout') { steps { checkout scm } }
 		stage('Build & Test') {
-			steps { 
+			steps {
+				sh 'mkdir -p $WORKSPACE/.gradle'
+				sh 'chmod -R 777 $WORKSPACE/.gradle'
 				sh 'chmod +x gradlew'
-				sh './gradlew clean test jacocoTestReport --no-daemon' 
+				sh './gradlew clean test jacocoTestReport --no-daemon'
 			}
 			post {
 				always {
