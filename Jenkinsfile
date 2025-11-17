@@ -8,12 +8,9 @@ pipeline {
 	options { timestamps() }
 	environment { CI = 'true' }
 	stages {
-		stage('Checkout') { steps { checkout scm } }
 		stage('Prep Gradle cache'){ steps { sh 'mkdir -p "$WORKSPACE/.gradle"' } }
 		stage('Build & Test') {
 			steps {
-				sh 'mkdir -p $WORKSPACE/.gradle'
-				sh 'chmod -R 777 $WORKSPACE/.gradle'
 				sh 'chmod +x gradlew'
 				sh './gradlew clean test jacocoTestReport --no-daemon'
 			}
