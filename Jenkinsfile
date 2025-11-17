@@ -1,14 +1,15 @@
 pipeline {
 	agent { 
 		docker { 
-			image 'gradle:8.10.2-jdk21' 
-			args '-v $HOME/.gradle:/home/gradle/.gradle' 
+			image 'gradle:8.10.2-jdk21'
+			args "-v ${env.WORKSPACE}/.gradle:/home/gradle/.gradle"
 		}
 	}
 	options { timestamps() }
 	environment { CI = 'true' }
 	stages {
 		stage('Checkout') { steps { checkout scm } }
+		stage('Prep Gradle cache'){ steps { sh 'mkdir -p "$WORKSPACE/.gradle"' } }
 		stage('Build & Test') {
 			steps {
 				sh 'mkdir -p $WORKSPACE/.gradle'
