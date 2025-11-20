@@ -23,7 +23,6 @@ pipeline {
 						],
 						sourceCodeRetention: 'NEVER',
 						failOnError: false,
-						calculateDiffForChangeRequests: false
 					)
 				}
 			}
