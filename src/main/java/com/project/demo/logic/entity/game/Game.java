@@ -2,7 +2,7 @@ package com.project.demo.logic.entity.game;
 
 import jakarta.persistence.*;
 
-@Table(name = "games")
+@Table(name = "Games")
 @Entity
 public class Game {
     @Id

@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "users")
+@Table(name = "user")
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
