@@ -17,7 +17,14 @@ pipeline {
 			post {
 				always {
 					junit 'build/test-results/test/*.xml'
-					publishCoverage adapters: [jacocoAdapter('build/reports/jacoco/test/jacocoTestReport.xml')]
+					recordCoverage(
+						tools: [
+							jacoco(pattern: 'build/reports/jacoco/test/jacocoTestReport.xml')
+						],
+						sourceCodeRetention: 'NEVER',
+						failOnError: false,
+						calculateDiffForChangeRequests: false
+					)
 				}
 			}
 		}
