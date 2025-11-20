@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
@@ -30,7 +30,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Transient
     private List<SimpleGrantedAutho> authorities;
+
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

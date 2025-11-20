@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-@Table(name = "Badges")
+@Table(name = "badges")
 @Entity
 public class Badge {
     @Id
@@ -19,6 +19,7 @@ public class Badge {
     private String description;
 
     @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date", updatable = false)
     private Date creationDate;
 

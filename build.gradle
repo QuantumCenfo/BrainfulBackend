@@ -16,34 +16,33 @@ java {
 repositories {
     mavenCentral()
 }
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // https://mvnrepository.com/artifact/com.azure/azure-storage-blob
-    implementation group: 'com.azure', name: 'azure-storage-blob', version: '12.23.0'
+
+    implementation 'com.azure:azure-storage-blob:12.23.0'
     implementation 'com.azure.spring:azure-spring-boot-starter-keyvault-secrets:3.14.0'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.1.2' // Or the latest stable version
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
 
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    // 🔹 Dependencias agregadas para pruebas REST Assured
+    // ======= TESTING =======
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.7.0'
+    testImplementation 'com.h2database:h2:2.2.224'
     testImplementation 'io.rest-assured:rest-assured:5.4.0'
-    testImplementation 'io.rest-assured:json-path:5.4.0'
-    testImplementation 'io.rest-assured:json-schema-validator:5.4.0'
 
-    // 🔹 JUnit 5 (para que use la versión más reciente del motor Jupiter)
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
 }
+
 
 bootJar {
     archiveBaseName.set('demo-java-spring-api')

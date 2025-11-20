@@ -41,8 +41,11 @@ public class RecommendationRestController {
     }
 
     @GetMapping("/{recommendationId}")
-    public Recommendation getRecommendationById(@PathVariable Long id) {
-        return recommendationRepository.findById(id).orElseThrow(RuntimeException::new);
+    public Recommendation getRecommendationById(
+            @PathVariable("recommendationId") Long id
+    ) {
+        return recommendationRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
     }
 
     @DeleteMapping("/{id}")
