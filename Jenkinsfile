@@ -17,7 +17,13 @@ pipeline {
 			post {
 				always {
 					junit 'build/test-results/test/*.xml'
-					publishCoverage adapters: [jacocoAdapter('build/reports/jacoco/test/jacocoTestReport.xml')]
+					recordCoverage(
+						tools: [
+							jacoco(pattern: 'build/reports/jacoco/test/jacocoTestReport.xml')
+						],
+						sourceCodeRetention: 'NEVER',
+						failOnError: false,
+					)
 				}
 			}
 		}
@@ -25,12 +31,6 @@ pipeline {
 			steps {
 				withSonarQubeEnv('SonarCloud') {
 					sh './gradlew sonarqube --no-daemon -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_AUTH_TOKEN'
-				}
-			}
-		}
-		stage('Quality Gate') {
-			steps {
-				timeout(time: 15, unit: 'MINUTES') {
 				}
 			}
 		}
