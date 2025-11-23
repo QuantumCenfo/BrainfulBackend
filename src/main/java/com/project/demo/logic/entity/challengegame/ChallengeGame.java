@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Table(name = "game_challenges")
+@Table(name = "Game_challenges")
 @Entity
 public class ChallengeGame {
     @Id

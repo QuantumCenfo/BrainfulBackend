@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
-@Table(name = "badges")
+@Table(name = "Badges")
 @Entity
 public class Badge {
     @Id
