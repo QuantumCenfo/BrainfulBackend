@@ -16,11 +16,11 @@ pipeline {
 			}
 			post {
 				always {
-					junit 'build/test-results/test/*.xml'
+					catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+						junit 'build/test-results/test/*.xml'
+					}
 					recordCoverage(
-						tools: [
-								[pattern: 'build/reports/jacoco/test/jacocoTestReport.xml']
-							],
+						tools: [[pattern: 'build/reports/jacoco/test/jacocoTestReport.xml']],
 						sourceCodeRetention: 'NEVER',
 						failOnError: false
 					)
