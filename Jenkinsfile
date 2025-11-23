@@ -30,7 +30,9 @@ pipeline {
 		stage('SonarCloud') {
 			steps {
 				withSonarQubeEnv('SonarCloud') {
-					sh './gradlew sonarqube --no-daemon -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_AUTH_TOKEN'
+					catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+						sh './gradlew sonarqube --no-daemon -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_AUTH_TOKEN'
+					}
 				}
 			}
 		}

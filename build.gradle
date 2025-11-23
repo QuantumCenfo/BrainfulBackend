@@ -80,7 +80,7 @@ jacocoTestReport {
 sonarqube {
   properties {
     property "sonar.projectKey", "brainfullapp"
-    property "sonar.organization", "BrainfullApp"
+    property "sonar.organization", "brainfullapp"
     property "sonar.sourceEncoding", "UTF-8"
 
     property "sonar.sources", "src/main/java"
