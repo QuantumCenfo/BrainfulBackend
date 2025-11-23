@@ -19,10 +19,10 @@ pipeline {
 					junit 'build/test-results/test/*.xml'
 					recordCoverage(
 						tools: [
-							jacoco(pattern: 'build/reports/jacoco/test/jacocoTestReport.xml')
-						],
+								[pattern: 'build/reports/jacoco/test/jacocoTestReport.xml']
+							],
 						sourceCodeRetention: 'NEVER',
-						failOnError: false,
+						failOnError: false
 					)
 				}
 			}
