@@ -3,25 +3,34 @@ package com.project.demo.api;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GameApiTest {
+
+    @LocalServerPort
+    private int port;
 
     private static String token;
     private static Long createdGameId;
 
-    @BeforeAll
-    public static void setup() {
-        RestAssured.baseURI = "http://localhost:8080";
+    @BeforeEach
+    public void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
 
         String loginBody = """
         {

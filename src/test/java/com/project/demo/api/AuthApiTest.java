@@ -2,19 +2,28 @@ package com.project.demo.api;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.given;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class AuthApiTest {
+
+    @LocalServerPort
+    private int port;
 
     private static String token;
 
-    @BeforeAll
-    public static void setup() {
-        RestAssured.baseURI = "http://localhost:8080";
+    @BeforeEach
+    public void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
     }
 
     @Test
