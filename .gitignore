@@ -25,6 +25,7 @@ src/main/resources/application.properties
 ### Gradle ###
 .gradle
 build/
+bin/
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -38,7 +39,3 @@ gradle-app.setting
 hs_err_pid*
 replay_pid*
 
-
-*.properties
-src/main/resources/application.properties
-*.properties

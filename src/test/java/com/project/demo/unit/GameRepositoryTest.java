@@ -4,10 +4,8 @@ import com.project.demo.logic.entity.game.Game;
 import com.project.demo.logic.entity.game.GameRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @EntityScan("com.project.demo.logic.entity.game")
 @EnableJpaRepositories("com.project.demo.logic.entity.game")
 class GameRepositoryTest {
