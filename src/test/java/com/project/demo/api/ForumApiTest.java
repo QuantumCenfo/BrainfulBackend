@@ -125,33 +125,6 @@ public class ForumApiTest {
 
     @Test
     @Order(4)
-    public void DeleteForumById() {
-        given()
-                .header("Authorization", "Bearer " + token)
-                .when()
-                .delete("/forums/" + forumIdForDelete)
-                .then()
-                .statusCode(200); // el delete del backend no devuelve nada, pero sí debe retornar 200
-
-        Response getResponse =
-                given()
-                        .header("Authorization", "Bearer " + token)
-                        .when()
-                        .get("/forums/" + forumIdForDelete)
-                        .then()
-                        .extract()
-                        .response();
-
-        // Debe dar un 500 o 404
-        assertThat(
-                "El foro con ID " + forumIdForDelete + " debería haber sido eliminado.",
-                getResponse.statusCode(),
-                is(anyOf(is(500), is(404)))
-        );
-    }
-
-    @Test
-    @Order(5)
     public void CreateComment() {
         String commentBody = """
         {
@@ -195,7 +168,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(6)
+    @Order(5)
     public void GetCommentsFromForum() {
 
         Response response =
@@ -220,7 +193,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(7)
+    @Order(6)
     public void DeleteComment() {
         given()
                 .header("Authorization", "Bearer " + token)
@@ -250,7 +223,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(8)
+    @Order(7)
     public void CreateForumWithoutTitleFail() {
         String foroBody = """
         {
@@ -281,7 +254,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(9)
+    @Order(8)
     public void CreateCommentWithoutContentFail() {
 
         String commentBody = """
@@ -315,7 +288,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(10)
+    @Order(9)
     public void CreateCommentWithoutUserFail() {
 
         String commentBody = """
@@ -347,7 +320,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(11)
+    @Order(10)
     public void CreateCommentWithNonExistingForumFail() {
 
         String commentBody = """
@@ -382,7 +355,7 @@ public class ForumApiTest {
     }
 
     @Test
-    @Order(12)
+    @Order(11)
     public void CreateCommentWithoutTokenFail() {
 
         String commentBody = """
@@ -412,6 +385,33 @@ public class ForumApiTest {
                 "Sin token debe devolver 403.",
                 response.statusCode(),
                 is(403)
+        );
+    }
+
+    @Test
+    @Order(12)
+    public void DeleteForumById() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .delete("/forums/" + forumIdForDelete)
+                .then()
+                .statusCode(200); // el delete del backend no devuelve nada, pero sí debe retornar 200
+
+        Response getResponse =
+                given()
+                        .header("Authorization", "Bearer " + token)
+                        .when()
+                        .get("/forums/" + forumIdForDelete)
+                        .then()
+                        .extract()
+                        .response();
+
+        // Debe dar un 500 o 404
+        assertThat(
+                "El foro con ID " + forumIdForDelete + " debería haber sido eliminado.",
+                getResponse.statusCode(),
+                is(anyOf(is(500), is(404)))
         );
     }
 
